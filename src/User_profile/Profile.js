@@ -8,6 +8,7 @@ export default class Profile extends React.Component {
         return(
             <div>
                 {firstTime ? "Welcome! Finish setting up your profile" : null}
+                <h2 className="text-center">Profile</h2>
             </div>
         )
     }
