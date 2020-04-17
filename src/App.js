@@ -19,6 +19,7 @@ import Home from './Home';
 import Login from './UserAuth/Login';
 import Logout from './UserAuth/Logout';
 import Register from './UserAuth/Register';
+import Profile from './User_profile/Profile';
 
 export default class App extends React.Component {
 	constructor() {
@@ -72,6 +73,9 @@ export default class App extends React.Component {
 						</Route>
 						<Route exact path="/register">
 							<Register />
+						</Route>
+						<Route exact path="/profile">
+							<Profile />
 						</Route>
 					</Switch>
 				</Router>
