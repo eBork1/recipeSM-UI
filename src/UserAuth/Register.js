@@ -60,23 +60,23 @@ export default class Register extends React.Component {
                         <div className="col-lg-3 col-md-6 col-sm-12">
                             <h1 className="border-bottom mb-4 pb-2">Register</h1>
                             <form onSubmit={this.register}>
-                                <div className="form-group">
+                                <div className="form-group text-center">
                                     <label>Username</label>
                                     <input onChange={this.onChange} type="text" name="name" className="form-control" id="inputName" placeholder="example123" />
                                 </div>
-                                <div className="form-group">
+                                <div className="form-group text-center">
                                     <label>Email address</label>
                                     <input onChange={this.onChange} type="email" name="email" className="form-control" id="inputEmail1" placeholder="example@email.com" />
                                 </div>
-                                <div className="form-group">
+                                <div className="form-group text-center">
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input onChange={this.onChange} type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Min. 8 Characters" />
                                 </div>
-                                <div className="form-group">
+                                <div className="form-group text-center">
                                     <label htmlFor="exampleInputPassword1">Confirm Password</label>
                                     <input onChange={this.onChange} type="password" name="password_confirmation" className="form-control" id="inputPasswordConfirmation" placeholder="Confirm" />
                                 </div>
-                                <button type="submit" className="btn btn-dark mb-3">Register</button>
+                                <button type="submit" className="btn btn-dark btn-block mb-3">Register</button>
                             </form>
                         </div>
                     </div>
