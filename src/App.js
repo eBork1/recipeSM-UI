@@ -11,6 +11,7 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
+	useParams,
 } from "react-router-dom";
 
 // Components
@@ -42,7 +43,8 @@ export default class App extends React.Component {
 			.then((response) => {
 				console.log(response);
 				this.setState({
-					loggedIn: true
+					loggedIn: true,
+					tester: "somemore"
 				})
 			});
 	}
@@ -55,6 +57,7 @@ export default class App extends React.Component {
 	}
 
 	render() {
+		let loggedIn = this.state.loggedIn;
 		return (
 			<div className="App">
 				<NavBar
@@ -66,7 +69,7 @@ export default class App extends React.Component {
 							<Home />
 						</Route>
 						<Route exact path="/login">
-							<Login />
+							{loggedIn ? <Home /> : <Login />}
 						</Route>
 						<Route exact path="/logout">
 							<Logout />
@@ -74,13 +77,21 @@ export default class App extends React.Component {
 						<Route exact path="/register">
 							<Register />
 						</Route>
-						<Route exact path="/profile">
-							<Profile />
+						<Route path="/user/:id" children={<GetUserUrl/>}>
 						</Route>
 					</Switch>
 				</Router>
 			</div>
 		);
 	}
+}
+
+function GetUserUrl() {
+	let { id } = useParams();
+	console.log(id);
+	return(
+		<Profile userName={id}/>
+	);
+
 }
 
