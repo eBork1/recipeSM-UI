@@ -92,6 +92,4 @@ function GetUserUrl() {
 	return(
 		<Profile userName={id}/>
 	);
-
 }
-
