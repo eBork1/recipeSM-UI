@@ -1,26 +1,39 @@
 import React from 'react';
+import axios from 'axios';
 import './profile.css'
 
 export default class Profile extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             userName: this.props.userName,
-            
         }
     }
 
-    renderList(){
+    renderList() {
         //
     }
 
-    componentDidMount(){
+    checkUserIsReal() {
+        axios({
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/verifyuser',
+            params : {
+                name:  this.props.userName,
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            });
+    }
+
+    componentDidMount() {
+        this.checkUserIsReal();
     }
 
     render() {
         var firstTime = document.referrer === "http://localhost:3000/register";
-        
 
         return (
             <div>
@@ -50,10 +63,10 @@ export default class Profile extends React.Component {
     }
 }
 
-function UserRecipeList () {
-    
+function UserRecipeList() {
+
 }
 
-function UserPostList () {
-    
+function UserPostList() {
+
 }
