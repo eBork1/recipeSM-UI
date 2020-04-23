@@ -44,7 +44,7 @@ export default class App extends React.Component {
 				console.log(response);
 				this.setState({
 					loggedIn: true,
-					tester: "somemore"
+					// tester: "somemore"
 				})
 			});
 	}
@@ -52,7 +52,7 @@ export default class App extends React.Component {
 	componentDidMount() {
 		if (localStorage.getItem("user_token")){
 			this.verifyUser();
-			console.log("user token found. Verifying...");
+			console.log("User token found. Verifying...");
 		}
 	}
 
