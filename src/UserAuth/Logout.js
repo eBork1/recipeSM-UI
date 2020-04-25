@@ -17,6 +17,7 @@ export default function Logout(){
         });
 
     localStorage.removeItem("user_token");
+    localStorage.removeItem("username");
     window.location.replace("/");
 
     return(
