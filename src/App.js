@@ -32,24 +32,31 @@ export default class App extends React.Component {
 
 	verifyUser() {
 		const user_token = localStorage.getItem("user_token");
-		axios({
-			method: 'get',
-			url: 'http://127.0.0.1:8000/api/user',
-			headers:
-			{
-				Authorization: "Bearer " + user_token,
-			},
-		})
-			.then((response) => {
-				this.setState({
-					loggedIn: true,
-				});
-				localStorage.setItem("username", response.data.name);
+		const username = localStorage.getItem("username");
+		if (user_token && username) {
+			this.setState({
+				loggedIn: true,
 			});
+		} else {
+			axios({
+				method: 'get',
+				url: 'http://127.0.0.1:8000/api/user',
+				headers:
+				{
+					Authorization: "Bearer " + user_token,
+				},
+			})
+				.then((response) => {
+					this.setState({
+						loggedIn: true,
+					});
+					localStorage.setItem("username", response.data.name)
+				});
+		}
 	}
 
 	componentDidMount() {
-		if (localStorage.getItem("user_token")){
+		if (localStorage.getItem("user_token")) {
 			this.verifyUser();
 		}
 	}
@@ -77,7 +84,7 @@ export default class App extends React.Component {
 						<Route exact path="/register">
 							<Register />
 						</Route>
-						<Route path="/user/:id" children={<GetUserUrl/>}>
+						<Route path="/user/:id" children={<GetUserUrl />}>
 						</Route>
 					</Switch>
 				</Router>
@@ -88,7 +95,7 @@ export default class App extends React.Component {
 
 function GetUserUrl() {
 	let { id } = useParams();
-	return(
-		<Profile userName={id}/>
+	return (
+		<Profile userName={id} />
 	);
 }
