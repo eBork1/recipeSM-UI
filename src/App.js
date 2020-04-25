@@ -41,27 +41,27 @@ export default class App extends React.Component {
 			},
 		})
 			.then((response) => {
-				console.log(response);
 				this.setState({
 					loggedIn: true,
-					// tester: "somemore"
-				})
+				});
+				localStorage.setItem("username", response.data.name);
 			});
 	}
 
 	componentDidMount() {
 		if (localStorage.getItem("user_token")){
 			this.verifyUser();
-			console.log("User token found. Verifying...");
 		}
 	}
 
 	render() {
 		let loggedIn = this.state.loggedIn;
+		let username = localStorage.getItem("username");
 		return (
 			<div className="App">
 				<NavBar
 					loginStatus={this.state.loggedIn}
+					username={username}
 				/>
 				<Router>
 					<Switch>
@@ -88,7 +88,6 @@ export default class App extends React.Component {
 
 function GetUserUrl() {
 	let { id } = useParams();
-	console.log(id);
 	return(
 		<Profile userName={id}/>
 	);
