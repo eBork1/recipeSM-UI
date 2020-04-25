@@ -26,9 +26,6 @@ export default class Login extends React.Component {
         axios.post('http://127.0.0.1:8000/api/login', { 'email': this.state.email, 'password': this.state.password })
 
             .then(response => {
-                this.setState({
-                    content: response.data.data.token
-                });
                 localStorage.setItem("user_token", response.data.data.token);
                 localStorage.setItem("username", response.data.data.name)
                 window.location.replace("/");
