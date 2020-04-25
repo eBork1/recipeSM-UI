@@ -34,12 +34,12 @@ export default class Register extends React.Component {
             },
         })
             .then(response => {
-                this.setState({
-                    content: response.data.token
-                });
-                const user_token = this.state.content;
+                const user_token = response.data.token;
+                const username = response.data.name;
+                const userpage = "/user/" + username;
                 localStorage.setItem("user_token", user_token);
-                window.location.replace("/profile");
+                localStorage.setItem("username", username);
+                window.location.replace(userpage);
 
             })
             .catch((error) => {
