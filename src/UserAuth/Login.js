@@ -7,7 +7,6 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            content: [],
             errorStatus: ""
         }
         this.login = this.login.bind(this)
@@ -30,8 +29,8 @@ export default class Login extends React.Component {
                 this.setState({
                     content: response.data.data.token
                 });
-                const user_token = this.state.content;
-                localStorage.setItem("user_token", user_token);
+                localStorage.setItem("user_token", response.data.data.token);
+                localStorage.setItem("username", response.data.data.name)
                 window.location.replace("/");
             })
             .catch((error) => {
