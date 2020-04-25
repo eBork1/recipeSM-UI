@@ -2,21 +2,18 @@ import React from 'react';
 import axios from 'axios';
 import './profile.css'
 
-function Layout() {
-
-}
-
-function editBio() {
-
-}
-
 export default class Profile extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             userName: this.props.userName,
+            editMode: false,
+            bio: "",
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.submitBio = this.submitBio.bind(this);
+        this.toggleEdit = this.toggleEdit.bind(this);
     }
 
     checkUsernameIsReal() {
@@ -28,13 +25,52 @@ export default class Profile extends React.Component {
             }
         })
             .then(response => {
-                console.log(response.data);
-                this.setState({ userID: response.data })
+                this.setState({ userData: response.data })
+                this.checkOwnership();
             });
     }
 
-    getUserData() {
-        
+    checkOwnership() {
+        let owner = localStorage.getItem('username') === this.state.userName;
+        if (owner) {
+            this.setState({ owner: true });
+        }
+    }
+
+    handleChange(event) {
+        const value = event.target.value
+        this.setState({
+            bio: value,
+        })
+    }
+
+    submitBio(event) {
+        event.preventDefault();
+        const user_token = localStorage.getItem("user_token");
+        axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/updatebio',
+            headers: {
+                Authorization: "Bearer " + user_token
+            },
+            params: {
+                bio: this.state.bio,
+            },
+        })
+            .then(() => {
+                window.location.reload(false);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    toggleEdit() {
+        if (this.state.editMode === false) {
+            this.setState({ editMode: true });
+        } else {
+            this.setState({ editMode: false });
+        }
     }
 
     componentDidMount() {
@@ -45,13 +81,17 @@ export default class Profile extends React.Component {
         var firstTime = document.referrer === "http://localhost:3000/register";
         return (
             <div>
-                {this.state.userID ?
+                {this.state.userData ?
                     <div className="container text-center">
                         {firstTime ? "Welcome! Finish setting up your profile" : null}
-                        <h2 className="text-center mt-5">Profile</h2>
+                        < h2 className="text-center mt-5">Profile</h2>
                         <div className="row">
                             <div className="col-lg-6 col-md-10 col-sm-12 mx-auto text-center">
-                                <img src="https://i.ya-webdesign.com/images/default-image-png-1.png" alt="profilepic" id="profilepic"></img>
+                                <img
+                                    src="https://i.ya-webdesign.com/images/default-image-png-1.png"
+                                    alt="profilepic"
+                                    id="profilepic">
+                                </img>
                                 <h6 className="m-3">{this.state.userName}</h6>
                                 <div className="btn btn-primary mb-3">Follow</div>
                             </div>
@@ -59,14 +99,33 @@ export default class Profile extends React.Component {
                         <div className="row">
                             <div className="col-lg-6 col-md-10 col-sm-12 mx-auto text-center">
                                 <h6>bio</h6>
-                                <p className="bg-light text-left">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                             </p>
+                                {this.state.owner === true ?
+                                    <button className="btn btn-link pt-0" onClick={() => { this.toggleEdit() }}>edit</button>
+                                    :
+                                    null
+                                }
+                                {this.state.editMode === true ?
+                                    <form onSubmit={this.submitBio}>
+                                        <textarea
+                                            className="form-control"
+                                            id="exampleFormControlTextarea1"
+                                            rows="3"
+                                            name="bio"
+                                            defaultValue={this.state.userData.bio}
+                                            onChange={this.handleChange}
+                                        >
+                                            {/* {this.state.userData.bio} */}
+                                        </textarea>
+                                        <button type="submit">Done</button>
+                                    </form>
+                                    :
+                                    <p className="bg-light text-left text-center">
+                                        {this.state.userData.bio}
+                                    </p>
+                                }
                             </div>
                         </div>
-                    </div>
+                    </div >
                     :
                     <div> user does not exist</div>
                 }
