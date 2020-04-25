@@ -16,7 +16,6 @@ export default class Register extends React.Component {
     onChange(event) {
         const name = event.target.name
         const value = event.target.value
-        console.log(value);
         this.setState({
             [name]: value,
         })
@@ -35,7 +34,6 @@ export default class Register extends React.Component {
             },
         })
         .then(response => {
-            console.log(response);
             this.setState({
                 content: response.data.token
             });
