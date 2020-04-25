@@ -26,28 +26,28 @@ export default class Register extends React.Component {
         axios({
             method: 'post',
             url: 'http://127.0.0.1:8000/api/register',
-            data:{
+            data: {
                 name: this.state.name,
                 email: this.state.email,
                 password: this.state.password,
                 password_confirmation: this.state.password_confirmation,
             },
         })
-        .then(response => {
-            this.setState({
-                content: response.data.token
-            });
-            const user_token = this.state.content;
-            localStorage.setItem("user_token", user_token);
-            window.location.replace("/profile");
+            .then(response => {
+                this.setState({
+                    content: response.data.token
+                });
+                const user_token = this.state.content;
+                localStorage.setItem("user_token", user_token);
+                window.location.replace("/profile");
 
-        })
-        .catch((error) =>{
-            console.log(error);
-            this.setState({
-                errorStatus: "There was an error creating your account. Please check your credentials and try again."
             })
-        })
+            .catch((error) => {
+                console.log(error);
+                this.setState({
+                    errorStatus: "There was an error creating your account. Please check your credentials and try again."
+                })
+            })
     }
 
     render() {
