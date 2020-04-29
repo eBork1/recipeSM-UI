@@ -14,6 +14,7 @@ export default class NavBar extends React.Component {
                         <a className="nav-item nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         <a className="nav-item nav-link" href="/feed">Feed</a>
                         <a className="nav-item nav-link" href="/communities">Communities</a>
+                        <a className="nav-item nav-link" href="/myrecipes">My Recipes</a>
                         {/* <a className="nav-item nav-link" href="/profile">Profile</a> */}
                     </div>
                     <div className="nav navbar-nav ml-auto">
