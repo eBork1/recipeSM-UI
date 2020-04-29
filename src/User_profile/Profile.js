@@ -16,6 +16,7 @@ export default class Profile extends React.Component {
         this.toggleEdit = this.toggleEdit.bind(this);
     }
 
+    // Make sure the username put in the URL is real and in the Database
     checkUsernameIsReal() {
         axios({
             method: 'get',
@@ -30,6 +31,7 @@ export default class Profile extends React.Component {
             });
     }
 
+    // 
     checkOwnership() {
         let owner = localStorage.getItem('username') === this.state.userName;
         if (owner) {
