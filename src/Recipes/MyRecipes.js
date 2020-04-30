@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 export default class MyRecipes extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             recipes: [],
@@ -16,7 +16,7 @@ export default class MyRecipes extends React.Component {
             url: 'http://127.0.0.1:8000/api/recipes/' + username,
         })
             .then(response => {
-                this.setState({ recipes: response.data })
+                this.setState({ recipes: response.data });
                 console.log(this.state.recipes);
             });
     }
@@ -40,6 +40,19 @@ export default class MyRecipes extends React.Component {
                             <div className="col-sm-12 col-md-8 col-lg-4 mx-auto text-center">
                                 <a className="btn btn-block btn-danger" href="/myrecipes/create">Create New Recipe</a>
                             </div>
+                        </div>
+                        <div className="row mt-3">
+                            {this.state.recipes.map((recipe, index) => (
+                                <div key={index} className="col-sm-12 col-md-8 col-lg-4 mx-auto text-center bg-light mb-3">
+                                    <div className="border-bottom">
+                                        <h4>{recipe.title}</h4>
+                                        <p>Difficulty: {recipe.difficulty}/5</p>
+                                        <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
+                                        <p><strong>Steps</strong> <br />{recipe.body}</p>
+                                    </div>
+                                </div>
+                            )
+                            )}
                         </div>
                     </div>
                     : // Not Logged In
