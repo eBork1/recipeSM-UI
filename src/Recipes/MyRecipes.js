@@ -1,7 +1,29 @@
 import React from 'react';
+import axios from 'axios';
 
 export default class MyRecipes extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            recipes: [],
+        }
+    }
 
+    getRecipes() {
+        let username = localStorage.getItem("username")
+        axios({
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/recipes/' + username,
+        })
+            .then(response => {
+                this.setState({ recipes: response.data })
+                console.log(this.state.recipes);
+            });
+    }
+
+    componentDidMount() {
+        this.getRecipes();
+    }
 
     render() {
         return (
