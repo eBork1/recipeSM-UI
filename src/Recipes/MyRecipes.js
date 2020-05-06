@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import RecipeThumbnail from './RecipeThumbnail';
 
 export default class MyRecipes extends React.Component {
     constructor(props) {
@@ -43,12 +44,14 @@ export default class MyRecipes extends React.Component {
                         </div>
                         <div className="row mt-3">
                             {this.state.recipes.map((recipe, index) => (
-                                <div key={index} className="col-sm-12 col-md-8 col-lg-4 mx-auto text-center bg-light mb-3">
+                                <div key={index} className="col-sm-12 col-md-10 col-lg-8 mx-auto text-center bg-light mb-3">
                                     <div className="border-bottom">
-                                        <h4>{recipe.title}</h4>
-                                        <p>Difficulty: {recipe.difficulty}/5</p>
-                                        <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
-                                        <p><strong>Steps</strong> <br />{recipe.body}</p>
+                                        <RecipeThumbnail
+                                            title={recipe.title}
+                                            difficulty={recipe.difficulty}
+                                            ingredients={recipe.ingredients}
+                                            body={recipe.body}
+                                        />
                                     </div>
                                 </div>
                             )
