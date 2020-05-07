@@ -21,9 +21,25 @@ export default class CreateRecipe extends React.Component {
     }
 
     handleSubmit(event) {
+        const user_token = localStorage.getItem("user_token");
         alert('A name was submitted: ' + this.state.value);
+        axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/createrecipe',
+            headers: {
+                Authorization: "Bearer " + user_token
+            },
+            data: {
+                title: this.state.title,
+                difficulty: this.state.difficulty,
+                ingredients: this.state.ingredients,
+                body: this.state.body,
+            }
+        });
         event.preventDefault();
     }
+
+
 
     render() {
         return (
@@ -56,7 +72,7 @@ export default class CreateRecipe extends React.Component {
                                         <label>
                                             Ingredients
                                         <br />
-                                            <textarea type="text" name="ingredients" value={this.state.value} onChange={this.handleChange} rows="10" cols="40"/>
+                                            <textarea type="text" name="ingredients" value={this.state.value} onChange={this.handleChange} rows="10" cols="40" />
                                         </label>
                                     </div>
                                 </div>
