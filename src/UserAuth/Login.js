@@ -61,9 +61,6 @@ export default class Login extends React.Component {
                     <div className="row justify-content-center">
                         <p>{this.state.errorStatus}</p>
                     </div>
-                    <div className="row justify-content-center">
-                        <p>Dont have an account? <a className="text-primary" href="/register">Register here</a></p>
-                    </div>
                 </div>
             </div>
         )
