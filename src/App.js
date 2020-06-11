@@ -23,6 +23,7 @@ import Register from './UserAuth/Register';
 import Profile from './User_profile/Profile';
 import MyRecipes from './Recipes/MyRecipes';
 import CreateRecipe from './Recipes/CreateRecipe';
+import UserRecipes from './Recipes/UserRecipes';
 
 export default class App extends React.Component {
 	constructor() {
@@ -89,14 +90,16 @@ export default class App extends React.Component {
 						<Route exact path="/myrecipes">
 							<MyRecipes
 								loginStatus={this.state.loggedIn}
-							 />
+							/>
 						</Route>
 						<Route exact path="/myrecipes/create">
 							<CreateRecipe
 								loginStatus={this.state.loggedIn}
 							/>
 						</Route>
-						<Route path="/user/:id" children={<GetUserUrl />}>
+						<Route path="/user/:username/recipes" children={<GetUserForRecipes />} >
+						</Route>
+						<Route exact path="/user/:username" children={<GetUserUrl />}>
 						</Route>
 					</Switch>
 				</Router>
@@ -106,8 +109,15 @@ export default class App extends React.Component {
 }
 
 function GetUserUrl() {
-	let { id } = useParams();
+	let { username } = useParams();
 	return (
-		<Profile userName={id} />
+		<Profile userName={username} />
+	);
+}
+
+function GetUserForRecipes() {
+	let { username } = useParams();
+	return (
+		<UserRecipes username={username} />
 	);
 }
