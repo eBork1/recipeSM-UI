@@ -22,7 +22,7 @@ export default class CreateRecipe extends React.Component {
 
     handleSubmit(event) {
         const user_token = localStorage.getItem("user_token");
-        alert('A name was submitted: ' + this.state.value);
+        // alert('A name was submitted: ' + this.state.value);
         axios({
             method: 'post',
             url: 'http://127.0.0.1:8000/api/createrecipe',
