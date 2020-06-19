@@ -24,6 +24,7 @@ import Profile from './User_profile/Profile';
 import MyRecipes from './Recipes/MyRecipes';
 import CreateRecipe from './Recipes/CreateRecipe';
 import UserRecipes from './Recipes/UserRecipes';
+import Recipe from './Recipes/Recipe';
 
 export default class App extends React.Component {
 	constructor() {
@@ -101,6 +102,8 @@ export default class App extends React.Component {
 						</Route>
 						<Route exact path="/user/:username" children={<GetUserUrl />}>
 						</Route>
+						<Route exact path="/recipe/:id" children={<GetSingleRecipe />}>
+						</Route>
 					</Switch>
 				</Router>
 			</div>
@@ -120,4 +123,11 @@ function GetUserForRecipes() {
 	return (
 		<UserRecipes username={username} />
 	);
+}
+
+function GetSingleRecipe() {
+	let { id } = useParams();
+	return (
+		<Recipe recipe={id} />
+	)
 }
