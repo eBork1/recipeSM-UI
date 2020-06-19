@@ -86,7 +86,7 @@ export default class Profile extends React.Component {
                 {this.state.userData ?
                     <div className="container text-center">
                         {firstTime ? "Welcome! Finish setting up your profile" : null}
-                        < h2 className="text-center mt-5">Profile</h2>
+                        <h2 className="text-center mt-5">Profile</h2>
                         <div className="row">
                             <div className="col-lg-6 col-md-10 col-sm-12 mx-auto text-center">
                                 <img
@@ -97,6 +97,16 @@ export default class Profile extends React.Component {
                                 <h6 className="m-3">{this.state.userName}</h6>
                                 <div className="btn btn-primary mb-3">Follow</div>
                             </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-3"></div>
+                            <div className="col-3 mx-auto text-center border">
+                                Followers: <strong>509</strong>
+                            </div>
+                            <div className="col-3 mx-auto text-center border">
+                                Following: <strong>509</strong>
+                            </div>
+                            <div className="col-3"></div>
                         </div>
                         <div className="row">
                             <div className="col-lg-6 col-md-10 col-sm-12 mx-auto text-center">
