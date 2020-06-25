@@ -10,6 +10,9 @@ export default class Profile extends React.Component {
             userName: this.props.userName,
             editMode: false,
             bio: "",
+            followerData: [],
+            followedUserData: [],
+
         }
         this.handleChange = this.handleChange.bind(this);
         this.submitBio = this.submitBio.bind(this);
@@ -26,7 +29,7 @@ export default class Profile extends React.Component {
             }
         })
             .then(response => {
-                this.setState({ userData: response.data })
+                this.setState({ userData: response.data });
                 this.checkOwnership();
             });
     }
@@ -67,6 +70,55 @@ export default class Profile extends React.Component {
             });
     }
 
+    follow(event) {
+        // event.preventDefault();
+        const user_token = localStorage.getItem("user_token");
+        axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/createfollow',
+            headers: {
+                Authorization: "Bearer " + user_token
+            },
+            params: {
+                followed_user: this.state.userName
+            }
+        })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    getFollowers() {
+        axios({
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/getfollowers/' + this.state.userName
+        })
+            .then(response => {
+                console.log(response);
+                this.setState({ followerData: response.data })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    getFollowedUsers() {
+        axios({
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/getfollowedusers/' + this.state.userName
+        })
+            .then(response => {
+                console.log(response);
+                this.setState({ followedUserData: response.data })
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     toggleEdit() {
         if (this.state.editMode === false) {
             this.setState({ editMode: true });
@@ -77,10 +129,14 @@ export default class Profile extends React.Component {
 
     componentDidMount() {
         this.checkUsernameIsReal();
+        this.getFollowers();
+        this.getFollowedUsers();
     }
 
     render() {
         var firstTime = document.referrer === "http://localhost:3000/register";
+        var followerCount = this.state.followerData.length;
+        var followedUserCount = this.state.followedUserData.length;
         return (
             <div>
                 {this.state.userData ?
@@ -95,16 +151,17 @@ export default class Profile extends React.Component {
                                     id="profilepic">
                                 </img>
                                 <h6 className="m-3">{this.state.userName}</h6>
-                                <div className="btn btn-primary mb-3">Follow</div>
+                                <button className="btn btn-primary mb-3" onClick={() => { this.follow() }}>Follow</button>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-3"></div>
                             <div className="col-3 mx-auto text-center border">
-                                Followers: <strong>509</strong>
+
+                                Followers: <strong>{followerCount}</strong>
                             </div>
                             <div className="col-3 mx-auto text-center border">
-                                Following: <strong>509</strong>
+                                Following: <strong>{followedUserCount}</strong>
                             </div>
                             <div className="col-3"></div>
                         </div>
