@@ -51,6 +51,7 @@ export default class UserRecipes extends React.Component {
                                                 difficulty={recipe.difficulty}
                                                 ingredients={recipe.ingredients}
                                                 body={recipe.body}
+                                                id={recipe.id}
                                             />
                                         </div>
                                     </div>
